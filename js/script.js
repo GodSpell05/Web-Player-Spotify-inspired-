@@ -50,14 +50,14 @@ async function getSongs(folder) {
     songUl.innerHTML =
       songUl.innerHTML +
       `<li> 
-                   <img class="invert" src="/music.svg" alt="">
+                   <img class="invert" src="music.svg" alt="">
                    <div class="info">
                        <div> ${song.replaceAll("%20", " ")}</div>
                        <div></div>
                    </div>
                    <div class="playnow">
                      <span>Play Now</span>
-                     <img class="invert libPlay" src="/play.svg" alt="">
+                     <img class="invert libPlay" src="play.svg" alt="">
                    </div> </li>`;
   }
 
@@ -84,7 +84,7 @@ const playMusic = (track, pause = false) => {
   document.querySelector(".songtime").innerHTML = "00:00 / 00:00";
 };
 
-async function displayAlbums(params) {
+async function displayAlbums() {
   let a = await fetch(`/songs/`);
   let response = await a.text();
   let div = document.createElement("div");
@@ -96,7 +96,7 @@ async function displayAlbums(params) {
       const e = array[index];
       
     
-    if (e.href.includes("/songs")) {
+    if (e.href.includes("/songs") && !e.href.includes(".htaccess")) {
       let folder = e.href.split("/").slice(-2)[0];
       //Get the metadata of the folder
       let a = await fetch(`/songs/${folder}/info.json`);
