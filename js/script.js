@@ -50,14 +50,14 @@ async function getSongs(folder) {
     songUl.innerHTML =
       songUl.innerHTML +
       `<li> 
-                   <img class="invert" src="music.svg" alt="">
+                   <img class="invert" src="img/music.svg" alt="">
                    <div class="info">
                        <div> ${song.replaceAll("%20", " ")}</div>
                        <div></div>
                    </div>
                    <div class="playnow">
                      <span>Play Now</span>
-                     <img class="invert libPlay" src="play.svg" alt="">
+                     <img class="invert libPlay" src="img/play.svg" alt="">
                    </div> </li>`;
   }
 
@@ -78,13 +78,13 @@ const playMusic = (track, pause = false) => {
   currentSong.src = `/${currFolder}/` + track;
   if (!pause) {
     currentSong.play();
-    play.src = "pause.svg";
+    play.src = "img/pause.svg";
   }
   document.querySelector(".songinfo").innerHTML = decodeURI(track);
   document.querySelector(".songtime").innerHTML = "00:00 / 00:00";
 };
 
-async function displayAlbums() {
+async function displayAlbums(params) {
   let a = await fetch(`/songs/`);
   let response = await a.text();
   let div = document.createElement("div");
@@ -96,7 +96,7 @@ async function displayAlbums() {
       const e = array[index];
       
     
-    if (e.href.includes("/songs") && !e.href.includes(".htaccess")) {
+    if (e.href.includes("/songs")) {
       let folder = e.href.split("/").slice(-2)[0];
       //Get the metadata of the folder
       let a = await fetch(`/songs/${folder}/info.json`);
@@ -131,7 +131,7 @@ async function displayAlbums() {
 
 async function main() {
   // Get the list of all the songs
-  await getSongs("songs/juice");
+  await getSongs("songs/rock");
   playMusic(songs[0], true);
 
   //Display all the albums on the page
@@ -141,10 +141,10 @@ async function main() {
   play.addEventListener("click", () => {
     if (currentSong.paused) {
       currentSong.play();
-      play.src = "pause.svg";
+      play.src = "img/pause.svg";
     } else {
       currentSong.pause();
-      play.src = "play.svg";
+      play.src = "img/play.svg";
     }
   });
 
